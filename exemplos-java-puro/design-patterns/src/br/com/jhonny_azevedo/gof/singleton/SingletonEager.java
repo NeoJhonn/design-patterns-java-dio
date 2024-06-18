@@ -1,4 +1,4 @@
-package br.com.jhonny_azevedo.singleton;
+package br.com.jhonny_azevedo.gof.singleton;
 
 /**
  * Singleton "Eager" - Padrão de projeto criacional
