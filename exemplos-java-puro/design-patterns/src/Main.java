@@ -1,3 +1,4 @@
+import br.com.jhonny_azevedo.gof.facade.Facade;
 import br.com.jhonny_azevedo.gof.singleton.SingletonEager;
 import br.com.jhonny_azevedo.gof.singleton.SingletonLazy;
 import br.com.jhonny_azevedo.gof.singleton.SingletonLazyHolder;
@@ -52,6 +53,12 @@ public class Main {
         // Corportamento agressivo
         robo.setComportamento(new ComportamentoAgressivo());
         robo.mover();
+
+        /////////// Strategy /////////////
+        System.out.println("\n");
+        System.out.println("Facade");
+        Facade facade = new Facade();
+        facade.migrarCliente("Jhonny", "89022-220");
 
     }
 }

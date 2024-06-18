@@ -23,3 +23,5 @@ os autores Gamma, Helm, Johnson e Vlissides conhecidos como “Gang of Four” (
 ## Facade
 
 - Prover uma interface que reduza a complexidade nas integrações com subsistemas.
+
+- Continuar => Praticando com Spring
