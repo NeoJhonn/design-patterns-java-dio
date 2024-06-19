@@ -35,24 +35,24 @@ os autores Gamma, Helm, Johnson e Vlissides conhecidos como “Gang of Four” (
 - Facade: construção de uma API REST. Integrações: Spring Data JPA e ViaCEP API(Feig).
 
 
-- Criar um projeto no spring initializr com as seguintes dependências: Spring Web, Spring Data JPA, PostgresSQL Driver e o OpenFeign.
+- Criar um projeto no spring initializr com as seguintes dependências: Spring Web, Spring Data JPA, PostgresSQL Driver, Lombok 
+e o OpenFeign.
 
-- Adicionar documentação com Swagger e Lombok manualmente no pom:
+- Adicionar documentação com Swagger manualmente no pom:
 
 ```
-<!-- Documentação com Swagger -->
+<!-- Documentação no Swagger -->
 <dependency>
        <groupId>org.springdoc</groupId>
-       <artifactId>springdoc-openapi-ui</artifactId>
-       <version>1.7.0</version>
+       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+       <version>2.2.0</version>
 </dependency>
 
-<!-- Lombok -->
-<dependency>
-       <groupId>org.projectlombok</groupId>
-       <artifactId>lombok</artifactId>
-       <optional>true</optional>
-</dependency>
+// Configurações no arquivo application.properties
+
+## Endpoint JSON documentação do Swagger
+springdoc.api-docs.path=/api-docs
+## Para acessar o Swagger UI(página html): http://localhost:8080/swagger-ui/index.html
 ```
 
 - OpenFeign: cliente REST declarativo, onde você consegue criar um client HTTP para consumir Api externas de uma maneira mais simples.
@@ -69,3 +69,47 @@ public class DesignPattersSpringApplication {
 	}
 }
 ```
+
+- Para consumir uma Api usando o OpenFeign crie uma interface e configure da seguinte forma:
+
+```
+@FeignClient(name = "viacep", url = "https://viacep.com.br/ws") <------------------------------
+public interface ViaCepService {
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{cep}/json/") <---------------------
+    Endereco consultarCep(@PathVariable("cep") String cep);
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
