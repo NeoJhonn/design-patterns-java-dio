@@ -54,7 +54,7 @@ public class Main {
         robo.setComportamento(new ComportamentoAgressivo());
         robo.mover();
 
-        /////////// Strategy /////////////
+        /////////// Facade /////////////
         System.out.println("\n");
         System.out.println("Facade");
         Facade facade = new Facade();
