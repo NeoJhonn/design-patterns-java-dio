@@ -3,6 +3,7 @@ package br.com.jhonnyazevedo.gof.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_enderecos")
 public class Endereco {
@@ -42,6 +44,4 @@ public class Endereco {
     private String ddd;
 
     private String siafi;
-
-
 }

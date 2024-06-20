@@ -1,7 +1,9 @@
 package br.com.jhonnyazevedo.gof.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.annotation.processing.Generated;
@@ -9,6 +11,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_clientes")
 public class Cliente {
@@ -21,9 +24,4 @@ public class Cliente {
 
     @ManyToOne
     private Endereco endereco;
-
-    public Cliente(String nome, Endereco endereco) {
-        this.nome = nome;
-        this.endereco = endereco;
-    }
 }

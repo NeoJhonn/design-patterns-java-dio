@@ -8,6 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+/**
+ * Representa design pattern <b>Facade</b> pois abstrai toda a complexidadede integrações
+ * (banco de dados Postgres e API do ViaCEP nesta API).
+ *
+ * @author Neojhonn
+ */
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -31,9 +38,9 @@ public class ClienteController {
         return ResponseEntity.ok(cliente);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable UUID id, @RequestBody Cliente cliente) {
-        clienteService.atualizar(id, cliente);
+    @PutMapping
+    public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
+        clienteService.atualizar(cliente);
         return ResponseEntity.ok(cliente);
     }
 
