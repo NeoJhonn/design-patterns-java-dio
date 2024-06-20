@@ -2,6 +2,7 @@ package br.com.jhonnyazevedo.gof.service.impl;
 
 import br.com.jhonnyazevedo.gof.Repository.ClienteRepository;
 import br.com.jhonnyazevedo.gof.Repository.EnderecoRepository;
+import br.com.jhonnyazevedo.gof.exceptions.ClienteNaoEncontradoException;
 import br.com.jhonnyazevedo.gof.model.Cliente;
 import br.com.jhonnyazevedo.gof.model.Endereco;
 import br.com.jhonnyazevedo.gof.service.IClienteService;
@@ -35,8 +36,9 @@ public class ClienteService implements IClienteService {
 
     @Override
     public Cliente buscarPorId(UUID id) {
-        return clienteRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("Cliente não encontrado"));
+        return clienteRepository.findById(id).orElseThrow(() -> {
+            throw new ClienteNaoEncontradoException();
+        });
     }
 
     @Override
@@ -46,25 +48,20 @@ public class ClienteService implements IClienteService {
 
     @Override
     public void atualizar(Cliente cliente) {
-        Optional<Cliente> clienteExistente = clienteRepository.findById(cliente.getId());
+        clienteRepository.findById(cliente.getId()).orElseThrow(() -> {
+            throw new ClienteNaoEncontradoException();
+        });
 
-        if (clienteExistente.isPresent()) {
-            salvarClienteComCep(cliente);
-        } else {
-            throw new RuntimeException("Cliente não encontrado");
-        }
+        clienteRepository.save(cliente);
     }
 
     @Override
     public void excluir(UUID id) {
-        Optional<Cliente> clienteExistente = clienteRepository.findById(id);
+        clienteRepository.findById(id).orElseThrow(() -> {
+            throw new ClienteNaoEncontradoException();
+        });
 
-        if (clienteExistente.isPresent()) {
-            clienteRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Cliente não encontrado");
-        }
-
+        clienteRepository.deleteById(id);
     }
 
     private void salvarClienteComCep(Cliente cliente) {
@@ -73,6 +70,8 @@ public class ClienteService implements IClienteService {
                 .orElseGet(() -> {
                     // Pesquisar o endereço pelo CEP
                     Endereco novoEndereco = viaCepService.consultarCep(cliente.getEndereco().getCep());
+                    String cep = novoEndereco.getCep().replace("-", "");
+                    novoEndereco.setCep(cep);
                     // Salvar no banco novo endereço
                     enderecoRepository.save(novoEndereco);
 

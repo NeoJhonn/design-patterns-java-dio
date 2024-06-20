@@ -21,7 +21,7 @@ public interface IClienteService {
 
     void inserir(Cliente cliente);
 
-    void atualizar(Cliente cliente);
+    void atualizar(Cliente cliente) throws Exception;
 
     void excluir(UUID id);
 }

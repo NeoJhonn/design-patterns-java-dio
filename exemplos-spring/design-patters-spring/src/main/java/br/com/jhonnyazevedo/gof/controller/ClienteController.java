@@ -1,11 +1,13 @@
 package br.com.jhonnyazevedo.gof.controller;
 
+import br.com.jhonnyazevedo.gof.exceptions.ClienteNaoEncontradoException;
 import br.com.jhonnyazevedo.gof.model.Cliente;
 import br.com.jhonnyazevedo.gof.service.impl.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.ref.Cleaner;
 import java.util.UUID;
 
 /**
@@ -28,8 +30,12 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarPorId(@PathVariable UUID id) {
-        return ResponseEntity.ok(clienteService.buscarPorId(id));
+    public ResponseEntity<Object> buscarPorId(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(clienteService.buscarPorId(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping
@@ -39,14 +45,28 @@ public class ClienteController {
     }
 
     @PutMapping
-    public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
-        clienteService.atualizar(cliente);
-        return ResponseEntity.ok(cliente);
+    public ResponseEntity<Object> atualizar(@RequestBody Cliente cliente) {
+        try {
+            clienteService.atualizar(cliente);
+            return ResponseEntity.ok(cliente);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable UUID id) {
-        clienteService.excluir(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> excluir(@PathVariable UUID id) {
+        try {
+            clienteService.excluir(id);
+            return ResponseEntity.ok(id);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
+
+
     }
 }
