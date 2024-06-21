@@ -39,9 +39,13 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) {
-        clienteService.inserir(cliente);
-        return ResponseEntity.ok(cliente);
+    public ResponseEntity<Object> inserir(@RequestBody Cliente cliente) {
+        try {
+            clienteService.inserir(cliente);
+            return ResponseEntity.ok(cliente);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping

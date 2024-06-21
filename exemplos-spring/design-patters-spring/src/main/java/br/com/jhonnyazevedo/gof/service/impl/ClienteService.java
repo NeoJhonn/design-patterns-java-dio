@@ -2,6 +2,7 @@ package br.com.jhonnyazevedo.gof.service.impl;
 
 import br.com.jhonnyazevedo.gof.Repository.ClienteRepository;
 import br.com.jhonnyazevedo.gof.Repository.EnderecoRepository;
+import br.com.jhonnyazevedo.gof.exceptions.ClienteEncontradoException;
 import br.com.jhonnyazevedo.gof.exceptions.ClienteNaoEncontradoException;
 import br.com.jhonnyazevedo.gof.model.Cliente;
 import br.com.jhonnyazevedo.gof.model.Endereco;
@@ -43,6 +44,14 @@ public class ClienteService implements IClienteService {
 
     @Override
     public void inserir(Cliente cliente) {
+        Endereco enderecoExistente = enderecoRepository.findById(cliente.getEndereco()
+                .getCep()).orElse(null);
+        Cliente clienteCadastrado = buscarPeloNome(cliente.getNome());
+
+        if (clienteCadastrado != null && enderecoExistente != null) {
+            throw new ClienteEncontradoException();
+        }
+
         salvarClienteComCep(cliente);
     }
 
@@ -81,5 +90,9 @@ public class ClienteService implements IClienteService {
         cliente.setEndereco(endereco);
 
         clienteRepository.save(cliente);
+    }
+
+    public Cliente buscarPeloNome(String nome) {
+        return clienteRepository.findByNome(nome).get();
     }
 }
