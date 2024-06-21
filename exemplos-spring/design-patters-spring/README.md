@@ -1,6 +1,6 @@
 # Desafio de Projeto Design Patterns 
 
-- Nesse projeto reproduzi com minha melhorias o exemplo usando paterns do Spring Boot.
+- Nesse projeto reproduzi com minhas melhorias o exemplo usando paterns do Spring Boot.
 
 ## Minhas Refatorações e melhorias
 
